@@ -1,0 +1,15 @@
+SHA256 MATCH submission.csv 6d7c830c29c31a2ad066c9bebb1684bc511dcc1c53bb7a168b5c0fbe1a91f33b
+SHA256 MATCH submission-boundary-consensus-v1.csv c435252d6b59a67bf249e945383323549694068b446bd6ef53f0a2cb52fa6c25
+SHA256 MATCH submission-boundary-updated-source-v1.csv a23998a106007f9bdd7d4e896786d3fa3813e81fa35b8c25d2b96d2c7bce58f2
+SHA256 MATCH submission-new-direct-recall-v1.csv 9546cb5e40df266fe458e94fcf1ea981268ce99926e9e8c36cb00dc7e52f07d7
+SHA256 MATCH submission-solfire-boundary-v1.csv 68b26327bd9770d621753144ec29220af0e2b40094ee5756953af41409c94a09
+{
+  "sha256": "68b26327bd9770d621753144ec29220af0e2b40094ee5756953af41409c94a09",
+  "rows": 1212,
+  "images": 180,
+  "legal_empty_images": 0,
+  "canonical_rle": true,
+  "disjoint": true,
+  "unique_ids": true,
+  "csv_readback": true
+}
