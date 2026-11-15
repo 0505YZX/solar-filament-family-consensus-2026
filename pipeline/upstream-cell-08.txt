@@ -1,0 +1,149 @@
+from IPython.display import Image as ShowImage, Markdown, display
+
+SIZE = 2048 * 2048
+IOU_MATCH = 0.5         # the host's hit rule: IoU strictly above 0.5
+MIN_FAMILIES = 3        # a filament stays if at least this many of the five families drew it
+STRICT_IOU = 0.6        # a row drawn by exactly MIN_FAMILIES needs every supporter at this IoU or more
+MIN_KEEP = 0.5          # a row that loses more than half its pixels to kept rows is the same filament
+OURS = "Mask R-CNN at 0.70"
+CUTS = {"0.80": "submission_thr080.csv", "0.70": "submission_thr070.csv", "0.50": "submission_thr050.csv",
+        "0.30": "submission_thr030.csv", "0.15": "submission_thr015.csv"}
+
+
+def read_rows(path):
+    """{image stem: [RLE strings in file order]}"""
+    frame = pd.read_csv(path, dtype=str)
+    stems = frame["filament_id"].str.rsplit("_", n=1).str[0]
+    return {stem: list(group) for stem, group in frame["segmentation_rle"].groupby(stems)}
+
+
+def pixels(rle):
+    """Column-major pixel indices of one mask."""
+    mask = mask_utils.decode({"size": [2048, 2048], "counts": rle.encode("ascii")})
+    return np.flatnonzero(mask.ravel(order="F"))
+
+
+def encode(px):
+    mask = np.zeros(SIZE, dtype=np.uint8)
+    mask[px] = 1
+    return mask_utils.encode(np.asfortranarray(mask.reshape((2048, 2048), order="F")))["counts"].decode("ascii")
+
+
+def label_voters(stem):
+    """One label image per voter for this image, so an IoU lookup touches only the mask's own pixels."""
+    voters = {}
+    for name in sources:
+        masks = [pixels(r) for r in sources[name].get(stem, [])]
+        labels = np.zeros(SIZE, dtype=np.int16)
+        for j, px in enumerate(masks, 1):
+            labels[px] = j
+        voters[name] = (masks, labels, np.array([m.size for m in masks], dtype=float))
+    return voters
+
+
+def best_iou(px, labels, areas):
+    hit = labels[px]
+    hit = hit[hit > 0]
+    if hit.size == 0:
+        return 0.0
+    counts = np.bincount(hit)
+    ids = np.nonzero(counts)[0]
+    return float((counts[ids] / (px.size + areas[ids - 1] - counts[ids])).max())
+
+
+def families_drawing(px, own_family, voters):
+    """{family: best IoU} for the row's own family (1.0) and each other family with a row above IoU 0.5."""
+    found = {own_family: 1.0}
+    for name, (_, labels, areas) in voters.items():
+        if family[name] == own_family or areas.size == 0:
+            continue
+        iou = best_iou(px, labels, areas)
+        if iou > IOU_MATCH and iou > found.get(family[name], 0.0):
+            found[family[name]] = iou
+    return found
+
+
+def kept_by_vote(found):
+    """Three families, or four or five; a row with exactly three needs every supporter at STRICT_IOU."""
+    if len(found) < MIN_FAMILIES:
+        return False
+    return len(found) > MIN_FAMILIES or min(found.values()) >= STRICT_IOU
+
+
+sources = {name: read_rows(find_output(ref)) for name, _, ref in PUBLIC_OUTPUTS}
+sources[OURS] = read_rows(OUTPUT_DIR / CUTS["0.70"])
+family = {name: fam for name, fam, _ in PUBLIC_OUTPUTS}
+family[OURS] = MASKRCNN
+cut_rows = {cut: read_rows(OUTPUT_DIR / name) for cut, name in CUTS.items()}
+stems = sorted(path.stem for path in TEST_FILES)
+
+columns = ["file", "rows", "rows drawn by 3+ families", "rows with a partner in tushhaaarrrr 0.40"]
+tally = {f"cut {cut}": [0, 0, 0] for cut in CUTS}
+tally.update({name: [0, 0, 0] for name in sources})
+kept, taken_from, dropped, backfilled, clipped = [], {name: 0 for name in sources}, {}, 0, 0
+
+for stem in stems:
+    voters = label_voters(stem)
+    best_labels, best_areas = voters["tushhaaarrrr 0.40"][1:]
+
+    # the table: each detector cut, and each voter, against the voters
+    for cut, by_stem in cut_rows.items():
+        for rle in by_stem.get(stem, []):
+            px = pixels(rle)
+            row = tally[f"cut {cut}"]
+            row[0] += 1
+            row[1] += len(families_drawing(px, MASKRCNN, voters)) >= MIN_FAMILIES
+            row[2] += best_areas.size > 0 and best_iou(px, best_labels, best_areas) > IOU_MATCH
+    for name, (masks, _, _) in voters.items():
+        for px in masks:
+            row = tally[name]
+            row[0] += 1
+            row[1] += len(families_drawing(px, family[name], voters)) >= MIN_FAMILIES
+            row[2] += best_areas.size > 0 and best_iou(px, best_labels, best_areas) > IOU_MATCH
+
+    # the file: rows in order of public score, kept under the vote rule
+    taken = np.zeros(SIZE, dtype=bool)
+    this_image, runner_up = [], None
+    for name, (masks, _, _) in voters.items():
+        for i, px in enumerate(masks):
+            found = families_drawing(px, family[name], voters)
+            if runner_up is None or len(found) > runner_up[0]:
+                runner_up = (len(found), name, i)
+            if not kept_by_vote(found):
+                if name == "tushhaaarrrr 0.40":
+                    dropped.setdefault(stem, []).append(sources[name][stem][i])
+                continue
+            free = ~taken[px]
+            left = int(free.sum())
+            if left < MIN_KEEP * px.size:
+                continue
+            if left == px.size:
+                rle = sources[name][stem][i]
+            else:
+                px, rle = px[free], encode(px[free])
+                clipped += 1
+            taken[px] = True
+            taken_from[name] += 1
+            this_image.append(rle)
+    if not this_image and runner_up is not None:   # no image goes empty: keep its best-voted row
+        _, name, i = runner_up
+        this_image.append(sources[name][stem][i])
+        taken_from[name] += 1
+        backfilled += 1
+    kept.extend((f"{stem}_{k}", rle) for k, rle in enumerate(this_image, 1))
+
+table = pd.DataFrame([[key, *values] for key, values in tally.items()], columns=columns)
+table["share drawn by 3+ families"] = (table[columns[2]] / table["rows"]).round(3)
+final = pd.DataFrame(kept, columns=["filament_id", "segmentation_rle"])
+check = validate_submission(final, set(stems))
+for stem, group in final.groupby(final["filament_id"].str.rsplit("_", n=1).str[0]):
+    area = sum(pixels(r).size for r in group["segmentation_rle"])
+    union = np.unique(np.concatenate([pixels(r) for r in group["segmentation_rle"]])).size
+    if area != union:
+        fail(f"rows overlap on {stem}")
+final.to_csv(SUBMISSION_PATH, index=False)
+report = {**check, "taken_from": taken_from, "clipped": clipped, "backfilled": backfilled,
+          "md5": md5_file(SUBMISSION_PATH)}
+(OUTPUT_DIR / "consensus_report.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+print(table.to_string(index=False))
+print(json.dumps(report, indent=2, sort_keys=True))

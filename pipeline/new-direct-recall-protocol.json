@@ -1,0 +1,32 @@
+{
+  "name": "New direct-family recall supplement v1",
+  "fixed_before_support_audit": true,
+  "base_file": "submission-boundary-updated-source-v1.csv",
+  "base_sha256": "a23998a106007f9bdd7d4e896786d3fa3813e81fa35b8c25d2b96d2c7bce58f2",
+  "preserve_all1199_base_masks_and_ids_exactly": true,
+  "candidate_source": "HDJoJo V2/369397665 public0.40, YOLO26x+YOLOv8x as one family",
+  "candidate_source_file": "hdjojo-latest-369397665.csv",
+  "candidate_source_sha256": "37e14844b57a00bd6f2138936dd098806d9654336045872c6b2425c4db25517d",
+  "mechanism": "Add only new direct-family detections omitted by the original V18 existence vote. Preserve current0.41 geometry. Use the same equal-family boundary consensus for qualifying new detections.",
+  "candidate_checks": {
+    "best_iou_to_base_maximum": 0.5,
+    "base_foreground_overlap_fraction_maximum": 0.1,
+    "minimum_distinct_families_including_direct": 3,
+    "minimum_best_iou_per_supporting_family": 0.6,
+    "support_matching": "Mutual best correspondence between each other source and the direct detections; missing source image supplies zero support",
+    "correlated_unet_sources": "Three source masks average within one family, never three votes",
+    "boundary": "Equal-family pixel majority with ties preserving direct candidate pixels",
+    "minimum_iou_boundary_to_direct": 0.8,
+    "boundary_area_ratio_bounds": [0.8, 1.25],
+    "connected_components8": "Must equal original direct candidate",
+    "after_overlap_removal": "At least90% pixels retained, at least3 distinct original support families still match at IoU>=0.6",
+    "expansion_conflicts": "Reject every conflicting supplement instead of resolving by order"
+  },
+  "do_not_carry_previous_two_instance_complement_automatically": true,
+  "training_updates": 0,
+  "threshold_search": false,
+  "maximum_new_submissions": 1,
+  "if_zero_qualifying_candidates": "Do not submit and do not lower gates",
+  "platform_deadline_beijing": "2026-11-16T19:59:59+08:00",
+  "limitation": "Agreement audit of unlabeled public test predictions, not independent validation or proof of true positives. Previous sparse complement scored no displayed gain. Underlying models retain author credits in README; full model weight reconstruction is incomplete."
+}
