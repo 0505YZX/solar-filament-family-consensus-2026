@@ -1,78 +1,298 @@
 {
-  "complete": false,
-  "reason": "Actual saved model bytes not yet downloaded and included.",
+  "complete": true,
   "files": [
     {
       "path": "base/fold0.pt",
-      "sha256": "2603250dfe7669bc582516011a15bd96c37d5c6cd85c756e0034b748985b9dd9",
       "fold": 0,
-      "included": false
+      "sha256": "2603250dfe7669bc582516011a15bd96c37d5c6cd85c756e0034b748985b9dd9",
+      "bytes": 32476115,
+      "included": true,
+      "parts": [
+        {
+          "path": "base-fold0.pt.part0000.bin",
+          "bytes": 20971520,
+          "sha256": "38d25a62710db824d13aecf989788b9ccf3680fd04d580198c20cdcc5828ef49"
+        },
+        {
+          "path": "base-fold0.pt.part0001.bin",
+          "bytes": 11504595,
+          "sha256": "0f800c99f9165ed99cdea181791baa88fcc4470afcf80b1a289c902159864297"
+        }
+      ]
     },
     {
       "path": "base/fold1.pt",
-      "sha256": "130f555ac5475ae36b42bc6ac23043967f468ba66494e78838f84f0d7de7ea0d",
       "fold": 1,
-      "included": false
+      "sha256": "130f555ac5475ae36b42bc6ac23043967f468ba66494e78838f84f0d7de7ea0d",
+      "bytes": 32476115,
+      "included": true,
+      "parts": [
+        {
+          "path": "base-fold1.pt.part0000.bin",
+          "bytes": 20971520,
+          "sha256": "f6ae9c8c50553d109189883832711a4b7602df3b86eeeae6cd0ef85f6d0b9c4e"
+        },
+        {
+          "path": "base-fold1.pt.part0001.bin",
+          "bytes": 11504595,
+          "sha256": "7c39229f77ae749a8a125d54ce8f0b0612cd85286d6a2b29c30250a5f73c7fac"
+        }
+      ]
     },
     {
       "path": "base/fold2.pt",
-      "sha256": "7b19d7d0b501d1aca791cb5f2856a95dd2d0a0d42c22c23e93e9ca8af7fdf885",
       "fold": 2,
-      "included": false
+      "sha256": "7b19d7d0b501d1aca791cb5f2856a95dd2d0a0d42c22c23e93e9ca8af7fdf885",
+      "bytes": 32476115,
+      "included": true,
+      "parts": [
+        {
+          "path": "base-fold2.pt.part0000.bin",
+          "bytes": 20971520,
+          "sha256": "1fc2b8e90cbb32007734ec363f883735af62fe301fe2783de0010fd499076419"
+        },
+        {
+          "path": "base-fold2.pt.part0001.bin",
+          "bytes": 11504595,
+          "sha256": "08b3af11c74733e9aafc20099e2451207a957a1b557df8906be8d052eb2f2ed3"
+        }
+      ]
     },
     {
       "path": "base/fold3.pt",
-      "sha256": "61d12a985297ca0fca3b64409af50bfc60379880f4e2226cc42afd2fea50da3d",
       "fold": 3,
-      "included": false
+      "sha256": "61d12a985297ca0fca3b64409af50bfc60379880f4e2226cc42afd2fea50da3d",
+      "bytes": 32476115,
+      "included": true,
+      "parts": [
+        {
+          "path": "base-fold3.pt.part0000.bin",
+          "bytes": 20971520,
+          "sha256": "e159c7962fdc7a3133eaa9eee7f97f14963de8ad1b12073eb2719df8633ca1fd"
+        },
+        {
+          "path": "base-fold3.pt.part0001.bin",
+          "bytes": 11504595,
+          "sha256": "e309ff5a07c97e9214b9d7e7795eb07fb611a38037648af6be82430d65186e5d"
+        }
+      ]
     },
     {
       "path": "refiner/fold0.pt",
-      "sha256": "a6334ef3bf6e0dcd9d9c94a5f9222c53aaf053edcad42c83f2d507b53df01d00",
       "fold": 0,
-      "included": false
+      "sha256": "a6334ef3bf6e0dcd9d9c94a5f9222c53aaf053edcad42c83f2d507b53df01d00",
+      "bytes": 105359723,
+      "included": true,
+      "parts": [
+        {
+          "path": "refiner-fold0.pt.part0000.bin",
+          "bytes": 20971520,
+          "sha256": "b3aa58e9cae59560769eec0e889e490b60fd21a95213f96df9117a0422d14ea0"
+        },
+        {
+          "path": "refiner-fold0.pt.part0001.bin",
+          "bytes": 20971520,
+          "sha256": "388ffd6e752861fa7f6ba6296b99194ce1d544f0dba490acc38767c3f7b00c94"
+        },
+        {
+          "path": "refiner-fold0.pt.part0002.bin",
+          "bytes": 20971520,
+          "sha256": "612571e7ab0a718ed81825c49b6b9641784364b09cd03d2e2e728f2791bc7ef0"
+        },
+        {
+          "path": "refiner-fold0.pt.part0003.bin",
+          "bytes": 20971520,
+          "sha256": "33759ed53b1e146b3f1eabacba33ce99e2d78a5052c5cc43e1b93a76f2efe8c4"
+        },
+        {
+          "path": "refiner-fold0.pt.part0004.bin",
+          "bytes": 20971520,
+          "sha256": "067eced820fbd9ac71620eec1800f5b52ef3c3f8ec1f86fcc6fc8bf5edf0e09a"
+        },
+        {
+          "path": "refiner-fold0.pt.part0005.bin",
+          "bytes": 502123,
+          "sha256": "5197b719c1caed51a666690a629efc667426c3863277779d81ce195398557dc0"
+        }
+      ]
     },
     {
       "path": "refiner/fold1.pt",
-      "sha256": "1b3438e7d1c5891cbe2d15b65b596d1cea0d4268dd270ae1e5f2922886f04523",
       "fold": 1,
-      "included": false
+      "sha256": "1b3438e7d1c5891cbe2d15b65b596d1cea0d4268dd270ae1e5f2922886f04523",
+      "bytes": 105359723,
+      "included": true,
+      "parts": [
+        {
+          "path": "refiner-fold1.pt.part0000.bin",
+          "bytes": 20971520,
+          "sha256": "fc8a83f908d65241c7f3054ee69a310b4805e871dbcc3f8b09b3f5964d25dc51"
+        },
+        {
+          "path": "refiner-fold1.pt.part0001.bin",
+          "bytes": 20971520,
+          "sha256": "a7fd8db35a598afdd812390cd063882baf6eed74dcbc695fb631cbf20a7b6e7e"
+        },
+        {
+          "path": "refiner-fold1.pt.part0002.bin",
+          "bytes": 20971520,
+          "sha256": "985ae72d064eaa76e0761928b7936dc2bd80b85ef48739b521073c4742372648"
+        },
+        {
+          "path": "refiner-fold1.pt.part0003.bin",
+          "bytes": 20971520,
+          "sha256": "3a042b307e97b9c7013a1ecdabf16c3c3b75f2f92c9d7c757c83634e0904ff79"
+        },
+        {
+          "path": "refiner-fold1.pt.part0004.bin",
+          "bytes": 20971520,
+          "sha256": "6d4bc8ac43ce3c4df9a0e543024f6d047215207b6f9ab947fdb4bca1dc7eb50c"
+        },
+        {
+          "path": "refiner-fold1.pt.part0005.bin",
+          "bytes": 502123,
+          "sha256": "79b01d1177ce441204f0b800de139930a68385c9315574927dea236035f56fe4"
+        }
+      ]
     },
     {
       "path": "refiner/fold2.pt",
-      "sha256": "b0a58bf1e93de318c7e7289d9bfee12bedc51ab95697c4a2b4e241ea8e8542f5",
       "fold": 2,
-      "included": false
+      "sha256": "b0a58bf1e93de318c7e7289d9bfee12bedc51ab95697c4a2b4e241ea8e8542f5",
+      "bytes": 105359723,
+      "included": true,
+      "parts": [
+        {
+          "path": "refiner-fold2.pt.part0000.bin",
+          "bytes": 20971520,
+          "sha256": "db7914bc5cf03555d9cd2f71a8c2d12c0194a0419e1e3c19334e64ab9a581f2b"
+        },
+        {
+          "path": "refiner-fold2.pt.part0001.bin",
+          "bytes": 20971520,
+          "sha256": "6986e83bece2f1b303bdc097dc7e43beee263eed4c395f3521a0d9dc63936149"
+        },
+        {
+          "path": "refiner-fold2.pt.part0002.bin",
+          "bytes": 20971520,
+          "sha256": "eab64366633e2b9dc49de6331fd6e7588932dbad8615e25fc0f0f888d5d693c5"
+        },
+        {
+          "path": "refiner-fold2.pt.part0003.bin",
+          "bytes": 20971520,
+          "sha256": "a8bb15cb766d981251480cbc05ee6e977dc57dd3004ca4129073f9b8907bd79c"
+        },
+        {
+          "path": "refiner-fold2.pt.part0004.bin",
+          "bytes": 20971520,
+          "sha256": "eee9ed938731525ce2bb3541d34de0af7287fc4e9cc5ffddb7b9f4ded1ace324"
+        },
+        {
+          "path": "refiner-fold2.pt.part0005.bin",
+          "bytes": 502123,
+          "sha256": "30365f04a9209d1ea0d5fdbbd34cd43c78fbc363747356dd76b124c681e8ec24"
+        }
+      ]
     },
     {
       "path": "refiner/fold3.pt",
-      "sha256": "5e11cc88b15c62d0309af944a61fe90485df54499c85eb6ac1912ddcac995e75",
       "fold": 3,
-      "included": false
+      "sha256": "5e11cc88b15c62d0309af944a61fe90485df54499c85eb6ac1912ddcac995e75",
+      "bytes": 105359723,
+      "included": true,
+      "parts": [
+        {
+          "path": "refiner-fold3.pt.part0000.bin",
+          "bytes": 20971520,
+          "sha256": "abb82f2f9a0c18995d066d771b59d01cffb414bf0a8f21b0de9fbbc9c224e386"
+        },
+        {
+          "path": "refiner-fold3.pt.part0001.bin",
+          "bytes": 20971520,
+          "sha256": "184e2d32c816045a845c6bff4ded9ccba4cacf4afa63f31b7c1df6770840f892"
+        },
+        {
+          "path": "refiner-fold3.pt.part0002.bin",
+          "bytes": 20971520,
+          "sha256": "e3a2f4358b0cbc6cd47f210ab945686a3fa1867396390209f76af821887036c4"
+        },
+        {
+          "path": "refiner-fold3.pt.part0003.bin",
+          "bytes": 20971520,
+          "sha256": "f626df04c322b4081eb2a7bfd5bf51262144f6751d55309ad8dbaacf1b052356"
+        },
+        {
+          "path": "refiner-fold3.pt.part0004.bin",
+          "bytes": 20971520,
+          "sha256": "c1807ff5e628a8eef024dd3b2e2572e81e236b2aad63f2cd0eedf6323896440b"
+        },
+        {
+          "path": "refiner-fold3.pt.part0005.bin",
+          "bytes": 502123,
+          "sha256": "15c1c73a9e397a873bd11549d05a2b7bcdb7e9bcf5487ba4228e0686f5141957"
+        }
+      ]
     },
     {
       "path": "scorer/fold0.joblib",
-      "sha256": null,
       "fold": 0,
-      "included": false
+      "sha256": "fe2acadb6019acd451729ecc2b173e93667942deaff8321c360ee08235a587ce",
+      "bytes": 434710,
+      "included": true,
+      "parts": [
+        {
+          "path": "scorer-fold0.joblib.part0000.bin",
+          "bytes": 434710,
+          "sha256": "fe2acadb6019acd451729ecc2b173e93667942deaff8321c360ee08235a587ce"
+        }
+      ]
     },
     {
       "path": "scorer/fold1.joblib",
-      "sha256": null,
       "fold": 1,
-      "included": false
+      "sha256": "6664405ee424930b84cf70b564d97064a5893480234001319a0d8f98869d34d1",
+      "bytes": 435062,
+      "included": true,
+      "parts": [
+        {
+          "path": "scorer-fold1.joblib.part0000.bin",
+          "bytes": 435062,
+          "sha256": "6664405ee424930b84cf70b564d97064a5893480234001319a0d8f98869d34d1"
+        }
+      ]
     },
     {
       "path": "scorer/fold2.joblib",
-      "sha256": null,
       "fold": 2,
-      "included": false
+      "sha256": "cd9294216d115f547b02757b58e868474cf026c82b1829868f712b063380ed2c",
+      "bytes": 435254,
+      "included": true,
+      "parts": [
+        {
+          "path": "scorer-fold2.joblib.part0000.bin",
+          "bytes": 435254,
+          "sha256": "cd9294216d115f547b02757b58e868474cf026c82b1829868f712b063380ed2c"
+        }
+      ]
     },
     {
       "path": "scorer/fold3.joblib",
-      "sha256": null,
       "fold": 3,
-      "included": false
+      "sha256": "45950cb5004f906ffcfad2bd823ae81d43bdeb35982d0a74e833992ff387ad91",
+      "bytes": 435030,
+      "included": true,
+      "parts": [
+        {
+          "path": "scorer-fold3.joblib.part0000.bin",
+          "bytes": 435030,
+          "sha256": "45950cb5004f906ffcfad2bd823ae81d43bdeb35982d0a74e833992ff387ad91"
+        }
+      ]
     }
-  ]
+  ],
+  "source_cascade_version": 357558453,
+  "source_public_version": 351734356,
+  "stored_weight_bytes": 553083408,
+  "standalone_image_inference_rerun_verified": false,
+  "storage": "All model files are committed as actual binary parts of at most 20 MiB under weights/; verify_models.py reassembles and hashes the exact original bytes."
 }

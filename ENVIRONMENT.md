@@ -1,5 +1,5 @@
 # Recorded environment
 
-Observed original CUDA preflight: Python 3.13.15, PyTorch 2.11.0+cu128, segmentation-models-pytorch 0.5.0, Tesla T4 GPUs. Source explicitly pins pycocotools 2.0.11. The complete original `requirements_frozen.txt` is pending download. Other package versions are not invented or presented as fully pinned.
+The exact selected Kaggle V4 output contains `environment/requirements_frozen.txt`. Python 3.13.15, CUDA PyTorch 2.11.0+cu128 and two Tesla T4 GPUs were recorded. `requirements.txt` pins the direct inference imports and model-library dependencies to this saved environment; it is not a fresh unpinned approximation. The full platform freeze also contains many unrelated preinstalled packages and multiple OpenCV variants. The focused installation uses opencv-python at the recorded version.
 
-Required imports include numpy, pandas, scipy, opencv-python, scikit-learn, joblib, torch, segmentation-models-pytorch and pycocotools. Scikit-learn serialization versions must match the saved scorer environment. Do not treat a fresh unpinned installation as verified numerical reproduction.
+Install with Python 3.13 and a compatible NVIDIA GPU/driver. The selected recipe explicitly uses CUDA fp16 and D4 transforms. CPU numerical parity and cross-device bit-exactness are not established. Scikit-learn 1.6.1 is required for the own saved scorer state. No network download or training is needed for model initialization once this repository and dependencies are available. `build_refiner(False)` disables pretrained encoder downloads.

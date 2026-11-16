@@ -5,23 +5,24 @@ The sole selected final-scoring entry is **0.39**, Kaggle submission **57105017*
 The actual selected CSV is `final_submission.csv` (180 images, 1281 rows, two legal empty images), SHA256:
 `85db516f7c7490e7d48a6dd953f408df7b28d4b6d2a47afb9207ed1528c9668d`.
 
-## Packaging status: weights not yet included
+## Frozen model package
 
-The original complete cascade ran successfully on Kaggle. Its four trained refiners and four scorers remain in our saved private output, and its four dense backbones remain in the attributed public source output. **This public checkout does not yet include those twelve model files.** Browser binary downloads failed; official CLI download is being prepared. The frozen dependency snapshot is also pending retrieval. This is a concrete packaging gap, not a claim of complete organizer-compliant reproduction. `model_manifest.json` deliberately refuses inference until the exact model bytes are included and verified.
+The actual twelve learned model files are included as 36 binary parts under `weights/` (553,083,408 original bytes). `python verify_models.py` checks each part, reconstructs the exact four dense backbones, four epoch-24 refiners and four fold-specific scorers, then checks each original SHA256. The files came from the pinned successful Kaggle outputs, not from prediction masks. Original dependency freeze and 707-image fold metadata are in `environment/`.
 
 The original training notebook, all source modules, extracted saved-weight inference functions, validation, report and actual selected submission are included. `technical_report.pdf` describes this 0.39 method. No third-party prediction CSV is an inference input for this method.
 
-## Intended saved-weight workflow
+## Saved-weight workflow
 
-After the model ledger is complete and the recorded environment has been installed:
+Use Python 3.13 with a CUDA 12.8 compatible GPU. Install the recorded inference dependencies, then run:
 
 ```sh
+python -m pip install -r requirements.txt
 python verify_models.py
 python infer.py --images /path/to/test/test_images --output result --require-exact
 python validate.py result/submission.csv
 ```
 
-`inference.ipynb` provides the same workflow. CUDA fp16/D4 behavior is retained; CPU numerical parity has not been established. The newly separated entry point has not yet been rerun end to end; the original complete Kaggle run is the evidence for the scored result.
+`inference.ipynb` provides the same workflow. CUDA fp16/D4 behavior is retained; CPU numerical parity has not been established. The separated image-to-CSV entry point has not been rerun end to end. The original complete Kaggle run is evidence for the scored image inference. Independently rerunning the unchanged final fusion on its saved four-fold candidate records reproduces the scored CSV byte for byte; the four saved scorers also reproduce their recorded scores without fitting. These checks are not a new full image-inference benchmark.
 
 ## Method and evidence
 

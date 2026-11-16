@@ -1,0 +1,14 @@
+{
+  "sha256": "85db516f7c7490e7d48a6dd953f408df7b28d4b6d2a47afb9207ed1528c9668d",
+  "rows": 1281,
+  "images": 180,
+  "legal_empty_images": 2,
+  "canonical_rle": true,
+  "disjoint": true,
+  "unique_ids": true,
+  "csv_readback": true,
+  "test": "unchanged fusion on downloaded V4 scored candidate records",
+  "image_to_csv_rerun": false,
+  "source_version": 357558453,
+  "fusion_source_sha256": "250bed1e49491b81364469ea243cb88be8e7f77ade2f949e9c5933944f9a8862"
+}
