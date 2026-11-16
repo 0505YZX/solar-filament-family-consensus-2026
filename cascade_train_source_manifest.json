@@ -1,0 +1,24 @@
+{
+  "mode": "train",
+  "chars": 107332,
+  "sha256": "909548effb9d731f4f685f0dd2e609ea1933bfa15fa9978082761850e442ccb9",
+  "files": {
+    "solarpq/__init__.py": "bc697950b434b11ff50fe2a5934073a7a8d4f4cb3e98b6f205145b8fef4e0fc4",
+    "solarpq/config.py": "e470ef604c1a429a2a793528de1505d5985dd8870d4c2766a83c66caa09b61a0",
+    "solarpq/geometry.py": "ef6c12ae57710bf3020d08f0c900fd4878021a43141351a87b3afc132f42ba39",
+    "solarpq/features.py": "1650aba6c5e1a048dc25f85c1b8162ce766f544af4f67a412f6d8a640f4c4835",
+    "solarpq/data.py": "29593fe55396775e017fe3f785277fb72913fd6b54c70b2de0ea9c8f13f9ef0a",
+    "solarpq/metrics.py": "dd025ddc5d10a8adb7809953803db9497f503df58a3eb71a4843f16485b3a909",
+    "solarpq/postprocess.py": "c70cc8433a74968cfb84c01ca65bf43a6843795b0a241f76f81c0819ef81db54",
+    "solarpq/calibrate.py": "e677d28c914d8f890fbe3483e9c191957f334d75f4058a1370a82fd0b4082d3f",
+    "solarpq/model.py": "e47352a1532867c0ae06f38babe398d974c1fa8086fe7ad86833d1f59edae80b",
+    "solarpq/infer.py": "dcb5bdb58ff07b29bfdace40e75b3ef42d7dc6dede8ed3bfba9527ec532a1d75",
+    "solarpq/pipeline.py": "c0a6f3822f20c012f6dd24a5fccfd46cb1ff049f3d09323efc439853e855e3b4",
+    "refiner_core.py": "4685b7f588522d987118d3b8bbc9999829f3294db044ec45f255f16fde074f10",
+    "setup_check.py": "5c9b8a82ef1ccfacc04e199b4a2c77933b7937b76b8b096d0515da7695a4fd68",
+    "cascade_worker.py": "329d2606f1614de67ec8f2c2665e153005defa2b40acebe3319a5e5dd689f41e",
+    "cascade_run.py": "f100eff51a3e9cd250b2e5e5a4c913afc3eeaf7c83d65c4d74f13456703b107a",
+    "NOTICE.md": "20d65a638492b893aa37b82a766f65cc0b7c632ee44835c4313f05712b6beb6b",
+    "public_source_manifest.json": "a0667e9e871f96bf78cee8e2c2a0561f74e7cea2f6b6cb8d7fbf0682f2880cb5"
+  }
+}

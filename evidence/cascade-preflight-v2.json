@@ -1,0 +1,114 @@
+{
+  "status": "preflight_passed",
+  "seconds": 16.49799084663391,
+  "python": "3.13.15",
+  "torch": "2.11.0+cu128",
+  "smp": "0.5.0",
+  "gpus": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "geometry": {
+    "warp_roundtrip_iou": 0.9737772203853609,
+    "seed_probability_alignment_iou": 0.9851051945633961,
+    "shape": [
+      5,
+      128,
+      384
+    ],
+    "native_pixel_center_mapping": "2*x+0.5"
+  },
+  "base": [
+    {
+      "fold": 0,
+      "shape": [
+        2,
+        1024,
+        1024
+      ],
+      "seconds": 1.6776316165924072,
+      "max_fg": 0.9999023675918579
+    },
+    {
+      "fold": 1,
+      "shape": [
+        2,
+        1024,
+        1024
+      ],
+      "seconds": 0.2993476390838623,
+      "max_fg": 0.9998928308486938
+    },
+    {
+      "fold": 2,
+      "shape": [
+        2,
+        1024,
+        1024
+      ],
+      "seconds": 0.22862577438354492,
+      "max_fg": 0.9997428059577942
+    },
+    {
+      "fold": 3,
+      "shape": [
+        2,
+        1024,
+        1024
+      ],
+      "seconds": 0.17004799842834473,
+      "max_fg": 0.9998717308044434
+    }
+  ],
+  "refiner": [
+    {
+      "model": "SMP UnetPlusPlus ResNet34 + SCSE",
+      "parameters": 26287604,
+      "batch": 8,
+      "crop_wh": [
+        384,
+        128
+      ],
+      "five_update_losses": [
+        0.8366690278053284,
+        0.7971499562263489,
+        0.7509985566139221,
+        0.7164718508720398,
+        0.6820146441459656
+      ],
+      "seconds_per_step": 0.8364549160003663,
+      "peak_gb": 2.056585728,
+      "head_updated": true,
+      "finite_gradients": true
+    },
+    {
+      "model": "SMP UnetPlusPlus ResNet34 + SCSE",
+      "parameters": 26287604,
+      "batch": 8,
+      "crop_wh": [
+        384,
+        128
+      ],
+      "five_update_losses": [
+        0.8366690278053284,
+        0.7971499562263489,
+        0.7509985566139221,
+        0.7164718508720398,
+        0.6820146441459656
+      ],
+      "seconds_per_step": 0.43809027671813966,
+      "peak_gb": 2.058158592,
+      "head_updated": true,
+      "finite_gradients": true
+    }
+  ],
+  "weights": {
+    "fold0.pt": "2603250dfe7669bc582516011a15bd96c37d5c6cd85c756e0034b748985b9dd9",
+    "fold1.pt": "130f555ac5475ae36b42bc6ac23043967f468ba66494e78838f84f0d7de7ea0d",
+    "fold2.pt": "7b19d7d0b501d1aca791cb5f2856a95dd2d0a0d42c22c23e93e9ca8af7fdf885",
+    "fold3.pt": "61d12a985297ca0fca3b64409af50bfc60379880f4e2226cc42afd2fea50da3d"
+  },
+  "folds_exact_match": true,
+  "metric_checks": true,
+  "training_started": false
+}

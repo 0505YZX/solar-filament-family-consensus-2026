@@ -1,8 +1,8 @@
 {
-  "sha256": "68b26327bd9770d621753144ec29220af0e2b40094ee5756953af41409c94a09",
-  "rows": 1212,
+  "sha256": "85db516f7c7490e7d48a6dd953f408df7b28d4b6d2a47afb9207ed1528c9668d",
+  "rows": 1281,
   "images": 180,
-  "legal_empty_images": 0,
+  "legal_empty_images": 2,
   "canonical_rle": true,
   "disjoint": true,
   "unique_ids": true,

@@ -1,0 +1,22 @@
+{
+  "selected_at_utc": "2026-11-16T00:27:04.836865+00:00",
+  "stage": "final_selection_verified",
+  "model": "Solar Filament PQ Cascade UNet++",
+  "version_id": 357558453,
+  "submission_id": "57105017",
+  "submission_file": "submission.csv",
+  "csv_sha256": "85db516f7c7490e7d48a6dd953f408df7b28d4b6d2a47afb9207ed1528c9668d",
+  "public_score_display": "0.39",
+  "selected_count": "1/1",
+  "platform_confirmation": "'submission.csv' will be evaluated for your final score",
+  "prior_041_selected": false,
+  "duplicate_submission_created": false,
+  "selection_reason": "Highest public score among existing submissions with retained full model pipeline; chooses the four-fold cascade over tied, more complex quality refiner. Public base four folds and own four trained refiners/scorers retained on Kaggle.",
+  "source_notebook": "https://www.kaggle.com/code/zhixiangyang123123/solar-filament-pq-cascade-unet?scriptVersionId=357558453",
+  "evidence": [
+    "selected-submission-observed.txt",
+    "selected-submission-proof.png"
+  ],
+  "material_sync_complete": false,
+  "material_sync_required": "Organizer form and public repository currently describe the former 0.41 fusion and must be synchronized to this 0.39 model. Final selection alone does not complete documentation requirements."
+}

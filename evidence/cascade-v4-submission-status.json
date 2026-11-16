@@ -1,0 +1,23 @@
+{
+  "status": "complete",
+  "checked_at": "2026-10-12T11:08:35.875Z",
+  "version_id": 357558453,
+  "notebook_version": 4,
+  "file": "submission.csv",
+  "selected_recipe": "unetplusplus_cascade",
+  "sha256": "85db516f7c7490e7d48a6dd953f408df7b28d4b6d2a47afb9207ed1528c9668d",
+  "oof_pq": 0.44630420052769526,
+  "public_score": 0.39,
+  "previous_public_best": 0.35,
+  "public_rank": 157,
+  "total_teams": 979,
+  "rank_percent": 16.036772216547497,
+  "top10_rank_floor": 97,
+  "top10_cutoff_display": 0.4,
+  "top10_achieved": false,
+  "entries": 5,
+  "url": "https://www.kaggle.com/competitions/filament-segmentation-2026/submissions",
+  "leaderboard": "https://www.kaggle.com/competitions/filament-segmentation-2026/leaderboard?search=ZhiXiangYang",
+  "proof": "cascade-v4-public-score-rank.png",
+  "score_precision": "Kaggle UI two decimal places; private score unavailable"
+}

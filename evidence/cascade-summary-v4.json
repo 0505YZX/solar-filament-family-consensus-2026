@@ -1,0 +1,118 @@
+{
+  "status": "completed",
+  "total_seconds": 12312.515311717987,
+  "gpus": 2,
+  "base_oof_pq": {
+    "pq": 0.43308033200286,
+    "dq": 0.6480376766091052,
+    "sq": 0.6682949890644908,
+    "tp": 5160,
+    "fp": 2566,
+    "fn": 3039,
+    "sum_iou": 3448.4021435727727
+  },
+  "refined_oof_pq": {
+    "pq": 0.44630420052769526,
+    "dq": 0.6545151145626084,
+    "sq": 0.6818852469525417,
+    "tp": 5099,
+    "fp": 2283,
+    "fn": 3100,
+    "sum_iou": 3476.93287421101
+  },
+  "tau": 0.28,
+  "comparison": {
+    "native_pq_delta": 0.013223868524835258,
+    "image_bootstrap_95_ci": [
+      0.008997668540549491,
+      0.017296082925592756
+    ],
+    "thresholds_tuned_on_these_oof_data": true,
+    "not_an_independent_test": true
+  },
+  "selected_recipe": "unetplusplus_cascade",
+  "refined_submission": {
+    "file": "unetplusplus_cascade_submission.csv",
+    "rows": 1281,
+    "images": 180,
+    "empty_images": 2,
+    "disjoint": true,
+    "rle_roundtrip": true,
+    "csv_roundtrip": true,
+    "sha256": "85db516f7c7490e7d48a6dd953f408df7b28d4b6d2a47afb9207ed1528c9668d"
+  },
+  "submission": {
+    "file": "submission.csv",
+    "rows": 1281,
+    "images": 180,
+    "empty_images": 2,
+    "disjoint": true,
+    "rle_roundtrip": true,
+    "csv_roundtrip": true,
+    "sha256": "85db516f7c7490e7d48a6dd953f408df7b28d4b6d2a47afb9207ed1528c9668d"
+  },
+  "fold_results": [
+    {
+      "fold": 0,
+      "seconds": 4347.915235519409,
+      "epochs": 24,
+      "crops": 4505,
+      "updates": 6768,
+      "amp_skips": 0,
+      "outer_validation_images": 177,
+      "upstream_model_fold": 0,
+      "train_base_features": "in-sample from fold-specific base (outer fold excluded)",
+      "test_images": 180,
+      "checkpoint_sha256": "a6334ef3bf6e0dcd9d9c94a5f9222c53aaf053edcad42c83f2d507b53df01d00"
+    },
+    {
+      "fold": 1,
+      "seconds": 4347.957364320755,
+      "epochs": 24,
+      "crops": 4476,
+      "updates": 6720,
+      "amp_skips": 0,
+      "outer_validation_images": 176,
+      "upstream_model_fold": 1,
+      "train_base_features": "in-sample from fold-specific base (outer fold excluded)",
+      "test_images": 180,
+      "checkpoint_sha256": "1b3438e7d1c5891cbe2d15b65b596d1cea0d4268dd270ae1e5f2922886f04523"
+    },
+    {
+      "fold": 2,
+      "seconds": 4349.848853826523,
+      "epochs": 24,
+      "crops": 4460,
+      "updates": 6696,
+      "amp_skips": 0,
+      "outer_validation_images": 177,
+      "upstream_model_fold": 2,
+      "train_base_features": "in-sample from fold-specific base (outer fold excluded)",
+      "test_images": 180,
+      "checkpoint_sha256": "b0a58bf1e93de318c7e7289d9bfee12bedc51ab95697c4a2b4e241ea8e8542f5"
+    },
+    {
+      "fold": 3,
+      "seconds": 4333.936835050583,
+      "epochs": 24,
+      "crops": 4503,
+      "updates": 6768,
+      "amp_skips": 0,
+      "outer_validation_images": 177,
+      "upstream_model_fold": 3,
+      "train_base_features": "in-sample from fold-specific base (outer fold excluded)",
+      "test_images": 180,
+      "checkpoint_sha256": "5e11cc88b15c62d0309af944a61fe90485df54499c85eb6ac1912ddcac995e75"
+    }
+  ],
+  "old_public_best": 0.35,
+  "public_score": null,
+  "public_rank": null,
+  "top10_achieved": false,
+  "validation_limits": [
+    "OOF used for threshold and recipe selection; not independent test",
+    "strict fold-specific base/refiner/scorer validation; training upstream features are in-sample",
+    "four-fold test fusion cannot be independently validated with these overlapping public weights",
+    "707-image folds differ from our older 107-image developer set; do not directly compare their PQ"
+  ]
+}

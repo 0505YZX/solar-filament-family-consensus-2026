@@ -27,129 +27,135 @@
 \guideStylefalse
 \setlength{\emergencystretch}{1em}
 \begin{document}
-\title{Family-Balanced Consensus with Bounded Contour Updates}
+
+\title{Native-Pixel Instance Refinement with a Four-Fold U-Net++ Cascade}
 \subtitle{A Solution to the Solar Filament Segmentation Challenge 2026}
 \author{Zhixiang Yang}
 \affiliation{\country{China}}
 \email{939295286@qq.com}
 \begin{abstract}
-This report describes our solution to the Solar Filament Segmentation Challenge 2026, a Kaggle competition on automatic segmentation of solar filaments in GONG H-$\alpha$ observations. We combine saved public predictions through five model-family votes, then improve contour agreement subject to explicit instance, topology and occupancy safeguards. Correlated models share a family weight. A conservative recall stage adds 13 corroborated instances, and a final SOLFIRE within-family update changes 359 contours without changing instance identities. The final 180-image, 1212-row file received a displayed public score of 0.41. Our contribution is prediction fusion and postprocessing; the component networks belong to their credited authors. The companion package verifies exact fusion replay by SHA256. Full upstream model-weight reconstruction remains incomplete and is explicitly disclosed; no claim of complete end-to-end final-judging reproducibility is made.
+We describe the selected final solution for the Solar Filament Segmentation Challenge 2026. A public four-fold residual U-Net produces foreground and spine probability maps from three physically derived grayscale channels. We train one candidate-conditioned U-Net++ refiner per fold, using long-axis-aligned crops from the original 2048-pixel observations. A fold-specific learned scorer estimates expected matched IoU, and native-resolution instance fusion produces the final masks. All stages preserve observation-level fold separation. The four refiners completed 24 epochs each, with 26,952 optimizer updates in total. Pooled development out-of-fold PQ increased from 0.433080 to 0.446304; thresholds were selected on those same data, so this is not an independent test estimate. The selected 180-image, 1281-row submission received a displayed Kaggle public score of 0.39 and was explicitly selected as the sole final-scoring submission on November 16, 2026. The earlier public-prediction ensemble is not the selected method described here.
 \end{abstract}
 \maketitle
+
 \section{Introduction}
 This report goes over the details of our submitted solution to the Solar Filament Segmentation Challenge~2026 \cite{filament-segmentation-2026}. The challenge, launched on July~10,~2026, is organized by the Earth-Space AI Research (ESAIR) Lab\footnote{\href{https://www.esairlab.com/home}{www.esairlab.com/}}. This challenge utilizes the MAGFiLO dataset for evaluation of the segmentation algorithms \cite{ahmadzadeh2024dataset}.
 
-Our starting point is an attributed public five-family existence vote by prvsiyan~\cite{prvsiyan2026}. This vote establishes which instances survive but inherits mask geometry from source traversal and overlap removal. We retain its instance identities and replace eligible contours by a family-balanced majority. The design seeks a bounded change with a transparent audit trail, rather than estimating accuracy from prediction agreement.
+Our selected solution uses a dense foreground/spine network for candidate generation and a separately trained instance refiner for native-pixel geometry. The dense backbone and its four pretrained fold weights are attributed to the public Tush V351734356 notebook~\cite{tush2026}. Our contribution is the native-resolution, five-channel U-Net++ refinement stage, fold-specific expected-match scoring, four-fold instance fusion, and validation. We do not claim the upstream dense network as an original architecture.
 
-The final method performs no gradient updates and uses no hidden test labels. It consumes compressed RLE prediction files at native $2048\times2048$ resolution. Its inputs were produced by public segmentation systems, including UNet-based networks, direct and crop-based YOLO variants, and Mask R-CNN. We do not claim these architectures or their training as our own. Source versions and file hashes are pinned to prevent silently changing an experiment when a public notebook is updated.
+The exact selected run is \texttt{Solar Filament PQ Cascade UNet++}, version 4, script version \texttt{357558453}. Its default \texttt{submission.csv} and explicitly named \texttt{unetplusplus\_cascade\_submission.csv} have the same SHA256:
+\begin{center}\small\ttfamily
+85db516f7c7490e7d48a6dd953f408df\\
+7b28d4b6d2a47afb9207ed1528c9668d
+\end{center}
+There is no newline in the actual fingerprint. The file has 1281 rows covering 180 observations, including two legal empty predictions. The Kaggle selection was verified as 1/1, submission identifier \texttt{57105017}. The public display is 0.39; no private score is available. This report supersedes the previous report about the 0.41 saved-prediction ensemble for purposes of describing the selected method. That higher public result is a different, nonselected artifact.
 
-\section{Methodology}
-\subsection{Inputs, families and provenance}
-The original voter set comprises seven files: two Tush predictions and one historical Dariush prediction in the UNet family; one HDJoJo direct-YOLO prediction; the MAGFiLO crop-YOLO26 prediction; the Tim crop-YOLO11 prediction; and a Mask R-CNN threshold-0.70 intermediate. We subsequently replace the direct source by HDJoJo V2, which combines YOLO26x and YOLOv8x. Those two models still receive only one family vote. The final SOLFIRE source~\cite{solfire2026} is averaged inside the existing UNet family, not counted as an independent sixth family.
+\section{Data and preprocessing}
+\subsection{Observations and multiple annotators}
+The selected run uses all 707 available training observations and the competition's 180 test images. Each input is a $2048\times2048$ grayscale observation. Multiple annotation records for the same physical observation remain in the same fold. Native masks are rasterized with pycocotools, preserving the organizer's polygon convention. We retain all annotator records rather than choosing the easiest annotation for a candidate.
 
-\begin{table}[h]
-\caption{Pinned public prediction sources. Versions identify saved artifacts, not retrained models. Complete byte hashes and credits are in the companion package.}
-\label{tab:inputs}
-\small
-\begin{tabular}{lll}\toprule
-Family & Contributor / source & Version \\\midrule
-UNet & Tush, two sources & 354107337 / 351734356\\
-UNet & Dariush, historical V2 & 359486068\\
-UNet & SOLFIRE, final update & 369652646\\
-Direct YOLO & HDJoJo, historical / latest & 367892109 / 369397665\\
-Crop YOLO26 & Muhammad Shoaib Altaf & 362037449\\
-Crop YOLO11 & Tim Gluhkikh & 342770268\\
-Mask R-CNN & Public threshold intermediate & thr070\\\bottomrule
-\end{tabular}
-\end{table}
+The four-fold assignment is the public backbone's original observation-level assignment. Observations are sorted by instrument and timestamp and dealt round-robin with the original seed 42; fold sizes are 177, 176, 177 and 177. We compare the computed assignment to the original \texttt{folds.json} before any training. This split is not a temporal holdout: adjacent observations can fall in different folds, which limits inference about future-time generalization.
 
-All files are decoded on the same pixel grid and grouped by image stem. An absent image in one source provides no support. No images or annotations are used to fit fusion parameters. The original 1199-row anchor is regenerated from the pinned voters; it is not substituted with an unrelated CSV or hidden output. Historical Dariush V2 is necessary because its newer output differs. Nine input CSVs suffice for the complete fusion replay, including the historical and updated direct sources.
+\subsection{Three physical dense-network channels}
+The original image is area-resized to $1024\times1024$. A fitted solar disk defines the valid region, $r/R<0.985$; an implausible fit uses the documented default disk. The first input channel is radial-median flat-field intensity, centered at one, scaled by 0.25, clipped to $[-3,3]$. The second is disk-restricted local contrast standardized by a smoothed local standard deviation. The third is a dark-ridge response: the maximum positive scale-normalized Hessian eigenvalue across scales 1.5, 3 and 6, with robust scaling and logarithmic compression. These are distinct physical transforms of one grayscale image, not an interpretation of the observations as color.
+
+The dense model is the source residual U-Net with three inputs and foreground and spine outputs. Exact architecture code and fold checkpoints are retained. At inference, each model uses the original eight D4 views. Probabilities are averaged in float32 under the saved CUDA fp16 inference recipe, clipped to the valid disk, and quantized to uint8 exactly as in the scored run. Quantization precedes later candidate construction and is part of the recipe.
 
 \clearpage
-\subsection{Existence voting and mask correspondence}
-The public baseline retains an instance when at least three distinct families support it at intersection over union (IoU) strictly greater than 0.5; exactly three supporters require each best correspondence to reach 0.6. Original source-order selection, reservation of previously occupied pixels and fallback behavior are replayed without modification. This reproduces the 1199-row anchor exactly. The seed is the original public ensemble, not the separately developed single-fold ConvNeXt system.
+\section{Native-resolution instance cascade}
+\subsection{Candidates and aligned conditioning}
+Foreground hysteresis uses low/high thresholds 0.20/0.40, closing radius 3 and minimum area 40 at the 1024 working resolution. We retain the original source candidate-feature and geometry routines. The component table supplies shape, intensity and ridge descriptors for later scoring. The dense spine output is an additional conditioning channel for the refiner; it is not silently substituted for an instance label.
 
-For contour updates, correspondence is more restrictive: a source mask and an anchor must be mutual best IoU matches, with IoU above 0.5. The three-family condition and its 0.6 restriction remain. SOLFIRE additionally requires a mutual anchor match at IoU at least 0.6. This avoids freely adding source pixels from weak correspondences. A source cannot supply multiple independent family votes simply because it contains several related checkpoints or networks.
+For every candidate, PCA of all candidate pixels determines its long axis. Working-pixel centers are mapped to native centers as $2x+0.5$. A context window, including a 0.35 margin, is warped to $384\times128$. The native-intensity channel is independently flat-field corrected on the full-resolution observation. The five refiner inputs are this native intensity, foreground probability, spine probability, the current candidate mask, and the union of other candidates. The same affine geometry is used for every conditioning channel and target. Channel sampling, clipping and inverse-warp details are supplied in \texttt{refiner\_core.py}.
 
-\subsection{Family-balanced geometry}
-Let $A_i$ be the original anchor, $M_{ifj}$ a matched source mask in family $f$, and $n_{if}$ the number of matched masks within that family. Each family contributes
+\subsection{U-Net++ refiner and training}
+The refiner is the actual nested U-Net++ implementation in SMP 0.5.0, with a ResNet34 encoder, SCSE decoder attention, five inputs and one mask output. Decoder channels are 256, 128, 64, 32 and 16. It has 26,287,604 parameters. ImageNet initialization is used for training; saved-weight inference initializes the architecture without downloading or fitting another model.
+
+One refiner is trained for each outer fold. Every training image for refiner $f$ is conditioned only on backbone $f$, whose training excluded the entire outer fold $f$. This prevents an outer validation image from entering indirectly through a backbone used to generate the refiner's training features. The resulting training features are in-sample for their dense backbone, while the outer validation features are out-of-fold. That distribution difference is a limitation of this design.
+
+For each annotator, the target is the native ground-truth instance best matching the candidate, provided initial IoU is at least 0.05. An annotator with no accepted match contributes zero. The cropped target averages all annotators' masks. Training uses synchronized horizontal and vertical flips, intensity perturbations, and small probability-channel noise. The objective is
 \begin{equation}
-v_{if}(x)=\frac{1}{n_{if}}\sum_{j=1}^{n_{if}}\mathbb{1}[x\in M_{ifj}],\qquad
-V_i(x)=\sum_{f\in F_i}v_{if}(x).
+L=0.50 L_{\mathrm{BCE}}+0.45 L_{\mathrm{softDice}}+0.05 L_{\mathrm{edge}},
 \end{equation}
-The proposal contains pixels with $V_i(x)>|F_i|/2$. Exact ties preserve the anchor pixel. The computation includes anchor and source union pixels; pixels already reserved by other retained instances are removed before evaluation. Thus an ensemble with three correlated UNet files does not outweigh three different families by raw model count.
-
-An update must meet all of the following guards: IoU to the protected mask at least 0.8; area ratio between 0.8 and 1.25; unchanged number of eight-connected components; a strict increase in the equal-family mean of source IoUs; and no decrease in the count of families whose mean source IoU exceeds 0.5. If simultaneous expansions conflict, every conflicting update reverts. We do not settle collisions by an arbitrary source order.
-
-The final within-family SOLFIRE stage applies the geometry and topology guards to both the current mask and the original anchor. Computing from the anchor limits cumulative contour drift. The 13 masks added by the earlier recall stage are preserved exactly. Of the 1212 final rows, 359 contours on 148 images change relative to that preceding 1212-row control. Minimum accepted IoU is 0.804205 to current and 0.801233 to anchor. These are safety diagnostics; they do not measure segmentation accuracy.
-
-\begin{figure}[h]
-\centering\includegraphics[width=\linewidth]{pipeline.png}
-\caption{The executable prediction-fusion pipeline. The upstream image-to-network inference stage is external and is not reconstructed by this package. All five generated CSV stages are checked against frozen hashes.}
-\label{fig:pipeline}
-\end{figure}
-
-\subsection{Conservative recall supplement}
-Before the final contour update, HDJoJo V2 detections missing from the anchor may enter a separate recall stage. A candidate has maximum IoU 0.5 to the retained set and at most 10\% foreground overlap. It needs mutual-best support at IoU at least 0.6 from three distinct families including direct YOLO. Its family-balanced majority must retain IoU at least 0.8 to the direct candidate, the same area interval and component count. After removing occupied pixels, at least 90\% of its pixels and three supporting family matches at IoU at least 0.6 must remain. Conflicting additions are rejected together. Thirteen instances on thirteen images pass, taking the row count from 1199 to 1212; their final areas range from 281 to 3326 pixels.
-
-\clearpage
-\section{Evaluation}
-\subsection{Public results and selection}
-The final artifact has already received a successful Kaggle scoring receipt. The displayed public score is 0.41. The last directly verified leaderboard position was 147 of 1548 teams (approximately the top 9.50\%) on November 15, 2026, with 15 cumulative submissions. This is a dated public observation, not the final private result. The chosen file is the first entry on the observed Public Score-sorted submission list. Several entries display 0.41; the platform's limited decimal display cannot establish exact equality of their hidden-precision scores.
+where edge consistency is the mean L1 difference of neighboring-pixel gradients in the two directions. AdamW uses encoder learning rate $10^{-4}$ and decoder rate $4\times10^{-4}$. Weight decay is $10^{-4}$, batch size 16, gradient clipping 1 and cosine minimum $2\times10^{-6}$. Seeds are $2042+f$. Each fold runs a fixed 24 epochs with a predeclared two-hour cap; all four completed 24 epochs. Outer validation is not used for epoch-level early stopping.
 
 \begin{table}[h]
-\caption{Observed public submission results. All rows use real scoring receipts. ``0.41'' denotes the displayed value, not an independently measured unrounded score.}
-\label{tab:results}
-\small
-\begin{tabular}{lrr}\toprule
-Submitted method & Rows & Public display\\\midrule
-Earlier in-house cascade / ConvNeXt control & 1192 & 0.39\\
-Attributed five-family baseline replay & 1199 & 0.40\\
-Family-balanced contour consensus & 1199 & 0.41\\
-Updated direct source + contour consensus & 1199 & 0.41\\
-Corroborated direct recall supplement & 1212 & 0.41\\
-SOLFIRE within-family boundary (final) & 1212 & 0.41\\\bottomrule
+\caption{Actual completed refiner training in selected run V4. These exclude the separate short preflight and earlier stopped run.}
+\centering\small
+\begin{tabular}{lrrr}\toprule
+Fold & Training crops & Epochs & Updates\\\midrule
+0 & 4505 & 24 & 6768\\
+1 & 4476 & 24 & 6720\\
+2 & 4460 & 24 & 6696\\
+3 & 4503 & 24 & 6768\\\midrule
+Total & 17944 & 96 & 26952\\\bottomrule
 \end{tabular}
 \end{table}
 
-Family-balanced contour consensus produced the first demonstrated displayed improvement from 0.40 to 0.41. Later direct-source replacement and the recall stage coincided with observed public rank advances, but no unrounded score was available. The final SOLFIRE contour stage produced no demonstrated displayed score or rank improvement relative to the preceding control. We retain that control and all fingerprints rather than describing every contour change as a gain. A separate SOLFIRE recall experiment added another 13 masks, yielded no demonstrated gain and is not included in this final file.
-
-The original public test metric is evaluated by the host on an approximately half-test public subset. We do not possess those labels, per-image public scores or private scores. Confidence intervals for the final public ensemble therefore cannot be calculated from the available evidence. Repeated public submissions also introduce model-selection bias. Agreement-based diagnostics on the test predictions are explicitly not held-out PQ or evidence of true positives.
-
-\subsection{Separate labelled development evidence}
-Earlier work evaluated a trainable ConvNeXt quality refiner on a single-fold cascade OOF set. This evidence belongs to the earlier 0.39 pipeline and is not a matched validation set for the final public ensemble. It used 48 calibration images and 129 repeatedly examined development images. Training excluded these 177 images; the pilot saw 143 of 530 training images, 3380 crops, 6327 optimizer updates, and selected epoch 12 at 5076 updates. On the 129-image development set, PQ changed from 0.45275035 to 0.46325567, paired difference 0.01050532, with a paired 95\% bootstrap interval [0.0021516, 0.0193779] and 24 additional true positives. The corresponding test submission still displayed 0.39. This demonstrates why development improvements cannot be equated with leaderboard improvement.
-
-A later zero-training SAM 2.1 prompt-refinement diagnostic also failed on the same frozen development predictions. Raw refinement gave PQ 0.31735074 versus the 0.45275035 control, difference $-0.13539961$. Its paired 95\% interval ran from $-0.15427336$ to $-0.11771649$. Guarded refinement gave PQ 0.39249304, difference $-0.06025731$, with an interval from $-0.07044308$ to $-0.05057692$. Neither became a test submission. These intervals describe this development diagnostic alone; they do not transfer to the 0.41 ensemble. No rejected architecture is represented as a successful part of the final solution.
-
-\subsection{Artifact validation}
-The exact final CSV is checked for column names, unique sequential instance IDs, all 180 image stems, canonical COCO compressed RLE, decoded dimensions, legal empty images, pairwise pixel disjointness and CSV readback. Byte identity is enforced by SHA256. Every generated intermediate is also hash-checked, so a threshold change or different historical input cannot silently be called the submitted method. Output validation establishes format and deterministic replay, not scientific correctness or final eligibility.
-
-\clearpage
-\subsection{Qualitative mask changes}
-Figure~\ref{fig:masks} shows six deterministic, area-stratified examples from the final contour changes. The panels display binary masks on a neutral background, not a solar-image overlay or annotation comparison. Shared pixels are dark gray; pixels removed from the preceding control are orange and added pixels are cyan. The examples illustrate bounded changes in thin structures and irregular edges. They cannot establish whether those changes follow the correct annotator interpretation.
+\subsection{Native mask reconstruction}
+At prediction, each refiner averages four flip views. We mix 80\% predicted mask probability with 20\% current-seed channel, inverse-warp to native pixels, threshold at 0.45 and retain the component with the greatest seed overlap. If this is empty, the source seed remains as a scored fallback. Overlapping refinements are resolved by their pasted pixel probabilities before fitting the candidate scorer. No ground-truth mask is used at test inference.
 
 \begin{figure}[h]
 \centering\includegraphics[width=\linewidth]{mask_examples.png}
-\caption{Mask-only examples from the final SOLFIRE within-family update, selected at the 5th, 20th, 40th, 60th, 80th and 95th area percentiles of changed instances. Native-pixel crops are independently scaled for visibility. Gray: retained in both; orange: removed; cyan: added. No ground truth is shown.}
-\label{fig:masks}
+\caption{Six masks from the actual selected CSV, chosen at fixed area quantiles across its nonempty instances. Each panel is an independently cropped binary prediction; panel scales differ. These examples illustrate output geometry, not agreement with unavailable test ground truth.}
 \end{figure}
 
-\section{Reproducibility, scope and limitations}
-\subsection{What the package reproduces}
-The companion package includes nine pinned public prediction CSVs, the 180 image IDs, the original voting-function excerpt, all fusion modules and protocol files, a Jupyter notebook, a CLI, exact dependency versions, attribution and SHA256 manifests. It regenerates the baseline and each subsequent stage in a new output directory. The final file is not used as an input to manufacture an apparent replay. The required final fingerprint is
-\begin{center}\small\ttfamily
-68b26327bd9770d621753144ec29220af0\\
-e2b40094ee5756953af41409c94a09
-\end{center}
-with no newline between the two displayed segments. The actual file uploaded with this report must be byte-identical to that already scored CSV. The environment tested for fusion uses Python 3.13.5, NumPy 2.1.3, pandas 2.2.3, SciPy 1.15.3 and pycocotools 2.0.11. Portability edits remove a workstation-specific dependency path and replace a previously saved seed's image-list lookup with an explicit image-ID file. The mask algorithms and thresholds remain unchanged.
+\clearpage
+\section{Candidate quality and fold fusion}
+\subsection{Fold-specific expected-match scoring}
+For each fold, a HistGradientBoostingRegressor uses the original source component descriptors and eight refinement descriptors: area ratio, seed IoU, confidence, spine agreement, refined area, probability percentile, changed fraction and empty-fallback indicator. Its target is expected matched IoU, averaged across the observation's annotator records, with IoUs at or below 0.5 contributing zero. This mirrors the metric's distinction between a visible mask and an accepted instance match.
 
-\subsection{End-to-end reconstruction gap}
-The package reproduces postprocessing from saved public predictions. It does not supply every exact upstream network weight, verified training split or complete image-to-network dependency environment for all five families. We have not independently reconstructed those networks from original images. Accordingly, this package does not establish that the competition's full public model-code-and-weight reproducibility requirement is satisfied. We disclose this limitation for the organizing committee's eligibility decision; the successful public scoring receipt alone cannot resolve it. We do not relabel public predictions as independently trained weights or claim third-party architectures as novel contributions.
+The regressor uses 250 iterations, learning rate 0.05, at most 12 leaves, minimum leaf size 25, L2 regularization 2 and seed $2042+f$. It is fitted only on the outer-training observations for that fold. Its serialized joblib state is required for inference, alongside the dense and refiner weights; a CSV prediction alone is not a replacement for any of these model files.
 
-The conservative guards also impose a scientific limitation: preserving the anchor's instance set and component count can preserve incorrect splits, merges and missed objects. Family errors are correlated even across the five coarse groups. Requiring three families may suppress valid small structures observed by fewer systems. Strict mask agreement may favor shared errors, and the limited public subset can reward a rule that does not generalize to the private subset. Stronger future work would build matched labelled OOF predictions for every source, test instance-existence and topology rules there, and provide all upstream inference code and frozen weights. This has not been completed for the submitted ensemble.
+\subsection{Four-fold test consensus}
+The test-time ensemble collects scored native masks from the four independent fold cascades. Candidates below 0.08 are removed before clustering. Candidates are processed in descending score; a cluster accepts at most one candidate from a fold, using IoU greater than 0.35 against its representative. The cluster score is its mean member score multiplied by $0.65+0.35n/4$, where $n$ is fold support. Member scores weight the native-pixel mask vote, thresholded at 0.5. Clusters are retained at score 0.28; higher-scored masks claim contested pixels first and final fragments under 16 pixels are removed. Full algorithm and iteration ordering are preserved in the source.
+
+\begin{figure}[h]
+\centering\includegraphics[width=\linewidth]{cascade_pipeline.png}
+\caption{The selected inference chain. Every fold loads a frozen dense model, a frozen native-pixel refiner and its learned scorer. Test-time inference does not fit parameters or consume saved third-party prediction CSVs.}
+\end{figure}
+
+\section{Evaluation and actual results}
+\subsection{Development out-of-fold evidence}
+The original dense-network control was reconstructed from its source weights and scored at native resolution across all 707 training observations. Its pooled PQ was 0.4330803320. The new cascade's pooled out-of-fold PQ was 0.4463042005, a difference of 0.0132238685. A paired, observation-level bootstrap gave a 95\% interval of [0.0089976685, 0.0172960829]. This interval captures resampling variation conditional on this experiment; it does not include method selection or threshold-tuning uncertainty.
+
+\begin{table}[h]
+\caption{Native-resolution development results using the recorded selected-run outputs. TP, FP and FN are pooled across annotation records.}
+\centering\small
+\begin{tabular}{lrrrr}\toprule
+Method & PQ & TP & FP & FN\\\midrule
+Dense control & .433080 & 5160 & 2566 & 3039\\
+U-Net++ cascade & .446304 & 5099 & 2283 & 3100\\\bottomrule
+\end{tabular}
+\end{table}
+
+The gain accompanies fewer false positives and a modest reduction in true positives. It is therefore inaccurate to describe it as an across-the-board recall improvement. The gate 0.28 was selected on these same out-of-fold data, so this is development cross-validation, not a frozen hidden test. The source control also uses its original five-group component-scoring protocol, while the new cascade uses the outer folds. This is a full recipe comparison, not an isolated architecture-only causal experiment.
+
+\subsection{Public scoring and final selection}
+The selected CSV received a successful Kaggle receipt on October 12, 2026, with displayed public score 0.39. It was selected explicitly as the sole final-scoring submission on November 16. The public score uses only the host's public test subset and is displayed to two decimal places. We have no private labels, unrounded public score or private result. Historical ranks belong to their observation dates and are not presented as a current rank for this selected file.
+
+\clearpage
+\section{Reproduction and implementation evidence}
+\subsection{Model files and saved-weight execution}
+The required learned artifacts are four original dense checkpoints, four selected epoch-24 U-Net++ checkpoints and four fold-specific candidate scorers. Their fold metadata and hashes identify the actual selected recipe. The public dense checkpoints come from source V351734356. The refiners and scorers were retained in our Kaggle run V357558453. The repository's model ledger records which exact files are included and verified. A publicly visible external weight link alone must not be interpreted as evidence that the bytes are already included in the repository.
+
+The companion package separates the original training notebook from the saved-weight inference entry point. For inference, install the pinned environment, verify the model manifest, point the script at the original grayscale test directory and load the frozen models. No source prediction CSV is needed to find new instances. The scored final CSV is retained for inspection and validation, not supplied as a substitute for image-to-model prediction.
+
+The original scored run successfully completed the full training, out-of-fold evaluation and 180-image inference chain on two Tesla T4 GPUs. Platform elapsed time was 12,366.9 seconds, including training, caching and evaluation; this is not a pure-inference benchmark. The full CUDA preflight tested all four dense models, finite refiner forward/backward operations, actual parameter updates and affine geometry. The synthetic geometry round-trip IoU was 0.973777 and seed/probability alignment IoU 0.985105. An additional small end-to-end test exercised the crop, training, scoring and CSV stages before the selected full run.
+
+The final output was checked for the exact two CSV columns, all 180 image stems, unique sequential instance identifiers, legal empty images, decoded $2048\times2048$ dimensions, compressed-RLE readback, pixel-disjoint instances and CSV round-trip consistency. The November 16 browser retrieval matched the previously recorded selected-file SHA256 exactly. These checks establish artifact identity and format; they do not themselves establish accuracy on private labels.
+
+\subsection{Limitations and rejected alternatives}
+The dense candidates bound the refiner's search space. An object missed by the dense stage cannot be invented by the crop refiner. Very small or weak filaments, inaccurate initial splits, and candidate joins therefore remain important failure modes. Affine resizing can distort thin structures, and retaining only seed-connected components can discard a legitimate disconnected annotation. The learned quality score may reflect training-set annotation preferences rather than physical certainty.
+
+Outer-fold separation protects the labelled evaluation, but the four-model test ensemble has no fully matching, independent out-of-fold analogue: its component training sets overlap. The reported development PQ measures single held-out fold cascades, not the complete four-fold test consensus. Training is not claimed bit-exact across hardware. The two-hour budget, final-epoch selection, quantization and fp16 operations should be preserved when examining runtime differences.
+
+Earlier in this project, we explored a later ConvNeXt refiner and saved-public-prediction ensembles. Those are different methods. In particular, a 0.41 public CSV depended on upstream resources not all available for original-image reconstruction. It has been deselected and is not represented as this cascade's performance. Reversing final masks cannot recover those missing trained parameters. The current final selection prioritizes a retained trainable model chain and an accurately identified 0.39 artifact.
 
 \subsection{Attribution and AI assistance}
-Public prediction contributors include Tush, Dariush Afshar, HDJoJo, Muhammad Shoaib Altaf, Tim Gluhkikh, Fususu / phuongncn, Nomannic19, prvsiyan and Vedran Hrabar. Their source/version ledger accompanies the code. Apache-2.0 was observed for the prvsiyan and SOLFIRE notebooks; no blanket license or redistribution right is asserted for every underlying third-party artifact. AI assistance supported implementation, debugging, analysis and report drafting. No hidden labels, fabricated measurements or AI-generated benchmark scores were used. The description distinguishes original contributions, source-derived components, measured results and unresolved reproducibility requirements.
+The physical-channel residual U-Net, original four-fold weights, data utilities, dense candidate construction and source metrics are credited to Tush V351734356 under its observed Apache-2.0 notebook license. Source SHA256 and notices are retained. The native U-Net++ refiner, conditioning geometry, outer-fold training, scorer and fusion are our implementation. U-Net++ and ResNet34 are established architectures~\cite{unetpp2018,resnet2016}; segmentation-models-pytorch implements the nested decoder under MIT terms. AI assistance supported implementation, debugging, analysis and report drafting. No private test labels or fabricated performance estimates were used.
+
+The selected CSV, report, public source and model manifest should describe the same frozen version. Any remaining packaging or execution limitation must be stated in the repository verification ledger rather than inferred away from the successful Kaggle score. Final eligibility and private ranking are determined by the organizers.
 
 \clearpage
 \section{Acknowledgment}\label{sec:acknowledgment}

@@ -1,28 +1,32 @@
-# Family-balanced consensus for solar filament segmentation
+# Solar filament segmentation: selected four-fold U-Net++ cascade
 
-2026 competition solution by Zhixiang Yang. Final displayed public score: **0.41**. Last verified public rank: **147/1548** (2026-11-15); private rank unknown.
+The sole selected final-scoring entry is **0.39**, Kaggle submission **57105017**, from our saved **V4 / 357558453** run. It replaces the previously selected 0.41 saved-public-prediction ensemble. The repository name is retained to preserve the link already submitted to the organizers.
 
-This is an attributed deterministic fusion and geometry postprocessor of public model predictions. It is **not** a claim to train or reconstruct all underlying models. Read [REPRODUCIBILITY.md](REPRODUCIBILITY.md) before using this package for final judging.
+The actual selected CSV is `final_submission.csv` (180 images, 1281 rows, two legal empty images), SHA256:
+`85db516f7c7490e7d48a6dd953f408df7b28d4b6d2a47afb9207ed1528c9668d`.
 
-## Run
+## Packaging status: weights not yet included
 
-Tested with Python 3.13.5 on Windows, numpy 2.1.3, pandas 2.2.3, scipy 1.15.3 and pycocotools 2.0.11. A fresh Python environment with these packages and the Jupyter frontend of your choice is sufficient for the fusion notebook. No GPU, weights, credentials, network calls, retraining or raw images are used by this replay.
+The original complete cascade ran successfully on Kaggle. Its four trained refiners and four scorers remain in our saved private output, and its four dense backbones remain in the attributed public source output. **This public checkout does not yet include those twelve model files.** Browser binary downloads failed; official CLI download is being prepared. The frozen dependency snapshot is also pending retrieval. This is a concrete packaging gap, not a claim of complete organizer-compliant reproduction. `model_manifest.json` deliberately refuses inference until the exact model bytes are included and verified.
 
+The original training notebook, all source modules, extracted saved-weight inference functions, validation, report and actual selected submission are included. `technical_report.pdf` describes this 0.39 method. No third-party prediction CSV is an inference input for this method.
+
+## Intended saved-weight workflow
+
+After the model ledger is complete and the recorded environment has been installed:
+
+```sh
+python verify_models.py
+python infer.py --images /path/to/test/test_images --output result --require-exact
+python validate.py result/submission.csv
 ```
-python -m pip install -r requirements.txt
-python run.py --output replay_output
-```
 
-The output directory must not already exist. Alternatively run `pipeline.ipynb` from the repository root. Expected final output: 1212 rows across all 180 image IDs; SHA256 `68b26327bd9770d621753144ec29220af0e2b40094ee5756953af41409c94a09`. The final byte hash is required, in addition to ID, canonical RLE, overlap, empty-image and CSV readback checks. Five intermediate CSV hashes are also asserted. Submission content has already been scored by Kaggle; this replay does not submit again.
+`inference.ipynb` provides the same workflow. CUDA fp16/D4 behavior is retained; CPU numerical parity has not been established. The newly separated entry point has not yet been rerun end to end; the original complete Kaggle run is the evidence for the scored result.
 
-## Method
+## Method and evidence
 
-Reproduce prvsiyan V18 existence voting, compute equal-family pixel consensus with mutual-best source matches and conservative geometry/topology/occupancy guards, update the direct-YOLO family, add 13 independently corroborated detections, then average SOLFIRE inside the existing UNet family for a final bounded contour update. Correlated UNet models share one family; dual direct YOLOs share another. There are five family votes, not one vote per model. Every threshold is recorded in `pipeline/*protocol.json`.
+Three physical image channels feed four residual U-Net foreground/spine backbones. Fold-matched five-channel native-pixel U-Net++ refiners and learned candidate scorers produce instances; four-fold consensus resolves overlap. The four refiners each completed 24 epochs (26952 total updates). Development OOF PQ was 0.446304 versus 0.433080 for the dense control. Thresholds were selected on that same development set; it is not a hidden-test estimate. Public score is displayed as 0.39; private score is unknown.
 
-## Provenance and licensing
+The former 0.41 fusion and its documentation remain available in repository history at commit `fbb427a5f33e534e02cf9b603039c0bd5e9ba6d3`. That result depended on missing private upstream assets and is not the selected cascade's performance. Final masks cannot recover those original trained parameters.
 
-See [ATTRIBUTION.md](ATTRIBUTION.md) and `input_manifest.json`. Original model authors retain credit. Apache-2.0 was observed for the prvsiyan and SOLFIRE notebooks. No blanket relicensing claim is made for third-party weights, images, predictions or code. Source use remains subject to its original license and competition rules. No full third-party weights are bundled. AI assistance was used for implementation, debugging, documentation and experiment analysis; the methods and limitations are explicitly described.
-
-## Report
-
-`technical_report.pdf` contains four body pages plus the mandated acknowledgment and references. Editable official-template sources are in `report/`. `final_submission.csv` is the already-scored final file and is provided for inspection; `run.py` does not use it as an input.
+See `REPRODUCIBILITY.md`, `ATTRIBUTION.md`, `model_manifest.json` and `evidence/`. Final eligibility is determined by the organizers.

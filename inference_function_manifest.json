@@ -1,0 +1,22 @@
+{
+  "load_public": {
+    "source": "setup_check.py",
+    "sha256": "e456641026a2a03db73eb7dc76e5d268a5ba6563177851bbb3429f31c6794583"
+  },
+  "two_head_prob": {
+    "source": "setup_check.py",
+    "sha256": "010bad9940973583717f4a544af2f902a042824fff85ac434ab291a51df0a046"
+  },
+  "crop_predictions": {
+    "source": "cascade_worker.py",
+    "sha256": "c019384a01c23c9bc586326195f98615eac442ff442605ad4fd5a2dd6da424a2"
+  },
+  "refine_image": {
+    "source": "cascade_worker.py",
+    "sha256": "695e5a2eb9cd90d3d1886b21a1bfb90288d8d37cd1f9625da345f2b735817027"
+  },
+  "fuse_test": {
+    "source": "cascade_run.py",
+    "sha256": "250bed1e49491b81364469ea243cb88be8e7f77ade2f949e9c5933944f9a8862"
+  }
+}

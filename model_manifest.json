@@ -1,0 +1,78 @@
+{
+  "complete": false,
+  "reason": "Actual saved model bytes not yet downloaded and included.",
+  "files": [
+    {
+      "path": "base/fold0.pt",
+      "sha256": "2603250dfe7669bc582516011a15bd96c37d5c6cd85c756e0034b748985b9dd9",
+      "fold": 0,
+      "included": false
+    },
+    {
+      "path": "base/fold1.pt",
+      "sha256": "130f555ac5475ae36b42bc6ac23043967f468ba66494e78838f84f0d7de7ea0d",
+      "fold": 1,
+      "included": false
+    },
+    {
+      "path": "base/fold2.pt",
+      "sha256": "7b19d7d0b501d1aca791cb5f2856a95dd2d0a0d42c22c23e93e9ca8af7fdf885",
+      "fold": 2,
+      "included": false
+    },
+    {
+      "path": "base/fold3.pt",
+      "sha256": "61d12a985297ca0fca3b64409af50bfc60379880f4e2226cc42afd2fea50da3d",
+      "fold": 3,
+      "included": false
+    },
+    {
+      "path": "refiner/fold0.pt",
+      "sha256": "a6334ef3bf6e0dcd9d9c94a5f9222c53aaf053edcad42c83f2d507b53df01d00",
+      "fold": 0,
+      "included": false
+    },
+    {
+      "path": "refiner/fold1.pt",
+      "sha256": "1b3438e7d1c5891cbe2d15b65b596d1cea0d4268dd270ae1e5f2922886f04523",
+      "fold": 1,
+      "included": false
+    },
+    {
+      "path": "refiner/fold2.pt",
+      "sha256": "b0a58bf1e93de318c7e7289d9bfee12bedc51ab95697c4a2b4e241ea8e8542f5",
+      "fold": 2,
+      "included": false
+    },
+    {
+      "path": "refiner/fold3.pt",
+      "sha256": "5e11cc88b15c62d0309af944a61fe90485df54499c85eb6ac1912ddcac995e75",
+      "fold": 3,
+      "included": false
+    },
+    {
+      "path": "scorer/fold0.joblib",
+      "sha256": null,
+      "fold": 0,
+      "included": false
+    },
+    {
+      "path": "scorer/fold1.joblib",
+      "sha256": null,
+      "fold": 1,
+      "included": false
+    },
+    {
+      "path": "scorer/fold2.joblib",
+      "sha256": null,
+      "fold": 2,
+      "included": false
+    },
+    {
+      "path": "scorer/fold3.joblib",
+      "sha256": null,
+      "fold": 3,
+      "included": false
+    }
+  ]
+}

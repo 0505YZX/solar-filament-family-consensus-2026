@@ -1,0 +1,88 @@
+{
+  "source": "https://www.kaggle.com/code/tushhaaarrrr/solar-filament-segmentation-2026-0-37?scriptVersionId=351734356",
+  "author": "tushhaaarrrr",
+  "license": "Apache-2.0",
+  "extraction": "Visible rendered writefile cells; captured outputs are not executed",
+  "files": [
+    {
+      "file": "solarpq/__init__.py",
+      "sha256": "bc697950b434b11ff50fe2a5934073a7a8d4f4cb3e98b6f205145b8fef4e0fc4",
+      "chars": 1131
+    },
+    {
+      "file": "solarpq/config.py",
+      "sha256": "e470ef604c1a429a2a793528de1505d5985dd8870d4c2766a83c66caa09b61a0",
+      "chars": 2777
+    },
+    {
+      "file": "solarpq/geometry.py",
+      "sha256": "ef6c12ae57710bf3020d08f0c900fd4878021a43141351a87b3afc132f42ba39",
+      "chars": 4014
+    },
+    {
+      "file": "solarpq/features.py",
+      "sha256": "1650aba6c5e1a048dc25f85c1b8162ce766f544af4f67a412f6d8a640f4c4835",
+      "chars": 3832
+    },
+    {
+      "file": "solarpq/data.py",
+      "sha256": "29593fe55396775e017fe3f785277fb72913fd6b54c70b2de0ea9c8f13f9ef0a",
+      "chars": 7459
+    },
+    {
+      "file": "solarpq/metrics.py",
+      "sha256": "dd025ddc5d10a8adb7809953803db9497f503df58a3eb71a4843f16485b3a909",
+      "chars": 5551
+    },
+    {
+      "file": "solarpq/postprocess.py",
+      "sha256": "c70cc8433a74968cfb84c01ca65bf43a6843795b0a241f76f81c0819ef81db54",
+      "chars": 6090
+    },
+    {
+      "file": "solarpq/calibrate.py",
+      "sha256": "e677d28c914d8f890fbe3483e9c191957f334d75f4058a1370a82fd0b4082d3f",
+      "chars": 11082
+    },
+    {
+      "file": "solarpq/model.py",
+      "sha256": "e47352a1532867c0ae06f38babe398d974c1fa8086fe7ad86833d1f59edae80b",
+      "chars": 4020
+    },
+    {
+      "file": "solarpq/train.py",
+      "sha256": "1c8b7306dc57cfa2f318daef9ed575c6f92beceaae974feb4d499e61c8fe44b3",
+      "chars": 11905
+    },
+    {
+      "file": "solarpq/infer.py",
+      "sha256": "e0905353948c236e05e61b865c7811e535ff322115671f42c05073abce3d9b35",
+      "chars": 2595
+    },
+    {
+      "file": "solarpq/export.py",
+      "sha256": "b44ff7672ad70e875bf0d9beedcf2a1527602b5e57a940d47d77d8c8bb71dfca",
+      "chars": 2537
+    },
+    {
+      "file": "solarpq/pipeline.py",
+      "sha256": "c0a6f3822f20c012f6dd24a5fccfd46cb1ff049f3d09323efc439853e855e3b4",
+      "chars": 2731
+    },
+    {
+      "file": "solarpq/audit.py",
+      "sha256": "2fb973cf1004be54ccad55d105857d941ed7c9fcf2a9844922d7b85196e5bd35",
+      "chars": 3080
+    },
+    {
+      "file": "solarpq/launch.py",
+      "sha256": "c5f1f74629f44eec804a3a4568630610fa8db933d688ebfccb21c2e6ccb0790f",
+      "chars": 5017
+    },
+    {
+      "file": "solarpq/fold_job.py",
+      "sha256": "8418bc80210d7aa4d9d9bd7ad4e7e699cb0a432818bec5f27979a828d4f594dc",
+      "chars": 2466
+    }
+  ]
+}

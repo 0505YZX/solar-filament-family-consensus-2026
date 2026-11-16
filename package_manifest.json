@@ -1,42 +1,271 @@
 {
-  "ATTRIBUTION.md": "db460f219f07528549efa7890f5122fe197739be94ea415bda36e63cdfb55b53",
-  "final_submission.csv": "68b26327bd9770d621753144ec29220af0e2b40094ee5756953af41409c94a09",
-  "final_submission.validation.json": "b5848d5e6b76cef609b089a6a81cd92d0e90fab1d1a92ad18e2b2daa9d8e1cd4",
-  "input_manifest.json": "819de4790ba6f64c45c30f03b1a6125da5fc2e3ce0a1cbfa9a76d0838fe7dc46",
-  "pipeline/audit_complementarity.py": "9b813c254786226ecab2d54e3e5bb0aac1bd97b240cf250224d4883b62b11a5f",
-  "pipeline/boundary-consensus-protocol.json": "bc1c3ce2c274498425a116edf6c03cab395e6aad627bb365e03cca44a2d24894",
-  "pipeline/boundary-updated-source-protocol.json": "f02675285fd2ab959f28c5a949a948d0ade538eeb42c9e6b778ae0c1a22215bd",
-  "pipeline/build_boundary_consensus.py": "39d3af9bcb4e7cf337c129ce13e99b1ceed1d67119d53dfc26d3d7b384b47b4e",
-  "pipeline/build_boundary_consensus_v1_frozen.py": "edff7d92a2adf4f1dae4c3bf7c002ca98877b4a43f14334b8226d485d908231b",
-  "pipeline/build_new_direct_recall.py": "0a18b2a62eda2bd01cbf8ec8ae4ec141932c096241b7b22bf3d1659440e62ca4",
-  "pipeline/build_solfire_boundary.py": "478f2e664ecdc7aacf399894fb0fc612510361a5ad7b0a1094854a94411e5590",
-  "pipeline/build_updated_direct.py": "a4d1059db1b04c54b0b47514ad030a55cc9eda323e12e80eb13831ddd04b78f4",
-  "pipeline/dariush-v2-submission.csv": "b9c62bf52ef47c61830fe7ec9c88443d092bfe5872ea2447a57477a9383b604a",
-  "pipeline/hdjojo-latest-369397665.csv": "37e14844b57a00bd6f2138936dd098806d9654336045872c6b2425c4db25517d",
-  "pipeline/hdjojo-v1-367892109.csv": "035d5da13bc5898e8c331fc0e5ee21606e3e39e4419708a72529147f0a1ed9b6",
-  "pipeline/image_ids.json": "08e75e27aa45152ac02585f60de795890e25f66ee7b0e825516c01f7aacad0a1",
-  "pipeline/magfilo-v362037449.csv": "07752516547a93f0b901c11ca43ef8ab329a9961944d13c935803ddecf35ce7f",
-  "pipeline/maskrcnn-thr070.csv": "8c064a0da930de9add44e63eef1b0cb4ca85325ed74f224403938232f4beb2dc",
-  "pipeline/new-direct-recall-protocol.json": "0ba9645ebc59c35dbb421169ef5fdb39003d21fccbdba54bc4401f50cb5536e6",
-  "pipeline/solfire-boundary-protocol.json": "dc32745d41afa0b361ec13ce7a3f0efd6b13f44b3e1c9f60e000c7d973a168ab",
-  "pipeline/solfire-v1-369652646.csv": "39ca14bc6752fa3e39eebd1f8b3dffdff81fdae30dc8254fbb5acf2f37a49e6c",
-  "pipeline/tim-v342770268.csv": "b46c72a265f665a0415154e90a8892845e2f3d7ba4a9e8d3c5d646dfe8e044d3",
-  "pipeline/tush037-v351734356.csv": "5ec22a6c3849b07078d2427f59385be8ce61411df944022557ca2c35b5e44429",
-  "pipeline/tush040-v354107337.csv": "91283f40c13fa18c0222fdb8d22f02f1939144829e01ed69d534498b804916d0",
-  "pipeline/upstream-cell-08.txt": "a738096c80f92ff7cc43f5fa77ad3c22997518cff95e226eb857911313fefdc4",
-  "pipeline.ipynb": "e1f17c0d238bfc0d14892a20e520b800920da573c6566127734a98b3a3e313d3",
-  "README.md": "dd01d11484d30a2892d6319a2ccec912d26f9c5540df3efc3f703f4d31605826",
-  "report/ACM-Reference-Format.bst": "4342d27456645567ef1a027f6474e894715bc31d468f040142fa54540440ad04",
-  "report/acmart.cls": "cb641fdfe8a6b9bbe171a0794218657c737c4b622c584dab09115a9e269eb296",
-  "report/main.bib": "80a2568f00e9eec01337142da27905863229464be44d0431fb244cba36cc246a",
-  "report/main.tex": "560396c1b750fe718eb119ddacae6b960249d42875900980ec06c9b46d2ceb72",
-  "report/mask_examples.png": "d09f22bc7cd08deaf72d5112192c966ff3ff11358ce193f0091645e113561280",
-  "report/pipeline.png": "03947ddf417e663ffea7c356d66dffe8356a85657bb0a0a709571361ab7f90c0",
-  "report/preamble.tex": "d84c55e7236eabf92f427341acb95c37028a1cb514cfb97d61c76c117056667d",
-  "REPRODUCIBILITY.md": "8818f08dba35e59e88545026f069f8bcd9e216fde7a71419b31c67270d2fb6e8",
-  "requirements.txt": "6606dd970fd6c194d20cb74036d3a7ae07c31fdd0c770a8098d714db8710ab9a",
-  "run.py": "f350336b7b49bfca95e099d42d4c4814505dfaffbb0fd6327c5657abc12b7bee",
-  "technical_report.pdf": "278dc4d8188130ccfb925e3ca1dceb9b0a3b2435440216d72616f4d49e6abf4c",
-  "validate.py": "524b43e6984dc31816299f299aba653b5bc6af1aeb381db0abf74ecbef716c37",
-  "verification.txt": "a8beec531f9c2a6124ce764dbccdcb282cae049bef0863caa877f64cd1a5ceee"
+  "selected_public_score": 0.39,
+  "full_public_model_package_complete": false,
+  "files": [
+    {
+      "path": "APACHE-2.0.txt",
+      "bytes": 10174,
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "ATTRIBUTION.md",
+      "bytes": 1317,
+      "sha256": "08ea79f74417185b57343638e5184e7d8a55aa10dfaa3b646211659e55ab7b0b"
+    },
+    {
+      "path": "cascade/cascade_run.py",
+      "bytes": 17734,
+      "sha256": "f100eff51a3e9cd250b2e5e5a4c913afc3eeaf7c83d65c4d74f13456703b107a"
+    },
+    {
+      "path": "cascade/cascade_worker.py",
+      "bytes": 15793,
+      "sha256": "329d2606f1614de67ec8f2c2665e153005defa2b40acebe3319a5e5dd689f41e"
+    },
+    {
+      "path": "cascade/inference_core.py",
+      "bytes": 7289,
+      "sha256": "dafde5ec3712630a5c62be418eb91e3c74a92afa62c1914404be51053f46b1d5"
+    },
+    {
+      "path": "cascade/NOTICE.md",
+      "bytes": 561,
+      "sha256": "3697a53f8bacf6c89068c8e9dba4b28fd5932868bd46ab4819a4a11a323a1383"
+    },
+    {
+      "path": "cascade/public_source_manifest.json",
+      "bytes": 2815,
+      "sha256": "81da612257b1db109d473a549d87023c793fce7bf73ff38c21d8fc13a9f661fa"
+    },
+    {
+      "path": "cascade/refiner_core.py",
+      "bytes": 8134,
+      "sha256": "4685b7f588522d987118d3b8bbc9999829f3294db044ec45f255f16fde074f10"
+    },
+    {
+      "path": "cascade/setup_check.py",
+      "bytes": 7189,
+      "sha256": "5c9b8a82ef1ccfacc04e199b4a2c77933b7937b76b8b096d0515da7695a4fd68"
+    },
+    {
+      "path": "cascade/solarpq/__init__.py",
+      "bytes": 1148,
+      "sha256": "84ae2f6a4a1c4cbee4fd88447b52314147c0198e09c678e387cbd17a5113f1e3"
+    },
+    {
+      "path": "cascade/solarpq/audit.py",
+      "bytes": 3143,
+      "sha256": "3163ed63d6fb58615123b8b8aa351bc41d294284cc68b66514b926596e34073e"
+    },
+    {
+      "path": "cascade/solarpq/calibrate.py",
+      "bytes": 11297,
+      "sha256": "70194b49193c9c6ba5f56a19a9204aa00a5744f5bd05dfca58150184f6d2b584"
+    },
+    {
+      "path": "cascade/solarpq/config.py",
+      "bytes": 2836,
+      "sha256": "a61105a36cc59b2afde533a039f66f55b7901051b53c03eb7ee952d8d5857689"
+    },
+    {
+      "path": "cascade/solarpq/data.py",
+      "bytes": 7633,
+      "sha256": "7d74dcb594f65a5264b52d8a4e1aa7a4adb87da4880513ec210be7028dc6a3c5"
+    },
+    {
+      "path": "cascade/solarpq/export.py",
+      "bytes": 2581,
+      "sha256": "9560d321b7b29feaaec0580f0954d0e375567f036dec94b6b5e27c4bb50291a8"
+    },
+    {
+      "path": "cascade/solarpq/features.py",
+      "bytes": 3913,
+      "sha256": "c72b0e89b1c36d6f98ac77a5f90cb11b24397b48556db204a46567732077f335"
+    },
+    {
+      "path": "cascade/solarpq/fold_job.py",
+      "bytes": 2511,
+      "sha256": "9f66301a9c2c8cd5c59a25d81f82efb864b24581a09fb51fdb9cbb876a9427bf"
+    },
+    {
+      "path": "cascade/solarpq/geometry.py",
+      "bytes": 4098,
+      "sha256": "5a4824d00f6b8035a82dab00433ba2a5e8dda2c5a09977065b00d126dc673d26"
+    },
+    {
+      "path": "cascade/solarpq/infer.py",
+      "bytes": 2659,
+      "sha256": "ba621b9cf4b15309627205c6b652a9b396f410b84a53eabaa64927790c3b7261"
+    },
+    {
+      "path": "cascade/solarpq/launch.py",
+      "bytes": 5115,
+      "sha256": "516f9252899a6170b2a2600e7ff67adb961a002d36a96019a535f2bb92aa12bb"
+    },
+    {
+      "path": "cascade/solarpq/metrics.py",
+      "bytes": 5676,
+      "sha256": "35d55cb4a24e83a2127fb6a82c304e0fcf117175d3bf45c58c0454a047494364"
+    },
+    {
+      "path": "cascade/solarpq/model.py",
+      "bytes": 4111,
+      "sha256": "edc9ac258349e81aceb55f38d4dedd3492a96690d48f0fb8934242bf8fd6056b"
+    },
+    {
+      "path": "cascade/solarpq/pipeline.py",
+      "bytes": 2781,
+      "sha256": "33bd5c6695b9a723f077e45257b9b792c13c19faf985146a21889c20d293d5bd"
+    },
+    {
+      "path": "cascade/solarpq/postprocess.py",
+      "bytes": 6202,
+      "sha256": "f813ce3bf16e0811b07730fdd73d42ec2fe398e75dac15bdac2a3451a9c964c8"
+    },
+    {
+      "path": "cascade/solarpq/train.py",
+      "bytes": 12146,
+      "sha256": "a38997af1deb8f8287f12ea0f524075e54c55c268b5d3973e624b9291d594427"
+    },
+    {
+      "path": "cascade_train_source_manifest.json",
+      "bytes": 1748,
+      "sha256": "02db6140783ff959beda444a7a76d2d8afd1f7aa69dfbd854747aef2cbcb3afe"
+    },
+    {
+      "path": "ENVIRONMENT.md",
+      "bytes": 626,
+      "sha256": "aee5f048959e5938590c97b6a030091282337c2716fc5350768a58cf66d387ca"
+    },
+    {
+      "path": "evidence/cascade-preflight-v2.json",
+      "bytes": 2500,
+      "sha256": "8e58c97b6eb07be987c728c86f7978b8e3b4b3c795b333606101534fa994243d"
+    },
+    {
+      "path": "evidence/cascade-summary-v4.json",
+      "bytes": 3714,
+      "sha256": "56445d0f40f9edb104c110cea220d655b8c6eac3b5cc58880f102edde68204ad"
+    },
+    {
+      "path": "evidence/cascade-v4-submission-status.json",
+      "bytes": 875,
+      "sha256": "f8710fb42d622c77845cf8872952a38a6c90385bf88be77b521c0eee01964e79"
+    },
+    {
+      "path": "evidence/final-selection.json",
+      "bytes": 1309,
+      "sha256": "2beb300a7d7dfa9d5de5ad65a1383da8a4ca5de5e86f60622d0f3aa8237ec7da"
+    },
+    {
+      "path": "final_submission.csv",
+      "bytes": 341289,
+      "sha256": "85db516f7c7490e7d48a6dd953f408df7b28d4b6d2a47afb9207ed1528c9668d"
+    },
+    {
+      "path": "final_submission.validation.json",
+      "bytes": 242,
+      "sha256": "483f47a27b237da40f5371f72ea6de74149b14925f3c0c41048afff80583e43c"
+    },
+    {
+      "path": "image_ids.json",
+      "bytes": 4143,
+      "sha256": "08e75e27aa45152ac02585f60de795890e25f66ee7b0e825516c01f7aacad0a1"
+    },
+    {
+      "path": "infer.py",
+      "bytes": 6011,
+      "sha256": "2e393b4061b449e3bb9f69b03c83aa3c4afe19181c6a5f68e46fea80a7147940"
+    },
+    {
+      "path": "inference.ipynb",
+      "bytes": 1447,
+      "sha256": "6be7386182b8095393b98ad8b182c92bd2d8dc6c81e1952ae8d55a1f3c38307b"
+    },
+    {
+      "path": "inference_function_manifest.json",
+      "bytes": 720,
+      "sha256": "df598c25d17bbe2aaadbea69a5c83609daf37c7b84b4cb803644f9aa549af34f"
+    },
+    {
+      "path": "model_manifest.json",
+      "bytes": 2008,
+      "sha256": "a1437ed62f22e7e747757d4556da45017f101e376c0141e3cbca94f12e841b57"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3032,
+      "sha256": "bb40363fda31a31ba70e34d4646cfbe6f14abc36a2a96e26d6cb790f309f8a68"
+    },
+    {
+      "path": "report/ACM-Reference-Format.bst",
+      "bytes": 94292,
+      "sha256": "4342d27456645567ef1a027f6474e894715bc31d468f040142fa54540440ad04"
+    },
+    {
+      "path": "report/acmart.cls",
+      "bytes": 122511,
+      "sha256": "cb641fdfe8a6b9bbe171a0794218657c737c4b622c584dab09115a9e269eb296"
+    },
+    {
+      "path": "report/cascade_pipeline.png",
+      "bytes": 107310,
+      "sha256": "5dd0f32008752ec1806c906455167cd8759a2ca8c1bc528e077eb9d0eded704c"
+    },
+    {
+      "path": "report/main.bib",
+      "bytes": 2835,
+      "sha256": "4aee4438bbe9abf5239242d4919966a9439c8baedcf84e29e50aa933e9b432da"
+    },
+    {
+      "path": "report/main.pdf",
+      "bytes": 248176,
+      "sha256": "f9bfa44f45347964c6963e63e4797cf3ac207a3612f63584548092fd42a78403"
+    },
+    {
+      "path": "report/main.tex",
+      "bytes": 21358,
+      "sha256": "012ff03b622dfc105ab5303edc77bb8af119a9c95ec193a657aef505cb483ff0"
+    },
+    {
+      "path": "report/mask_examples.png",
+      "bytes": 56461,
+      "sha256": "4f937c411b18d91480739f066540ae7615f053ed14149adb27edefb4c95621a3"
+    },
+    {
+      "path": "report/preamble.tex",
+      "bytes": 1856,
+      "sha256": "d84c55e7236eabf92f427341acb95c37028a1cb514cfb97d61c76c117056667d"
+    },
+    {
+      "path": "REPRODUCIBILITY.md",
+      "bytes": 1846,
+      "sha256": "d1021d65b4b6f918f6ff58b0139a1f8ef15703ef8e673a126952c9f79c0747b8"
+    },
+    {
+      "path": "solar_pq_cascade_train.ipynb",
+      "bytes": 111568,
+      "sha256": "5982d7d76a240d46325a141dba9e061982c2e96c7b7aa53ce23dd2a944610597"
+    },
+    {
+      "path": "solar_pq_cascade_train.py",
+      "bytes": 107344,
+      "sha256": "56c2afd47f6dcd2aaae49c154f059edd38d6830f14ff1ca156f48bed4d9efbb4"
+    },
+    {
+      "path": "technical_report.pdf",
+      "bytes": 248176,
+      "sha256": "f9bfa44f45347964c6963e63e4797cf3ac207a3612f63584548092fd42a78403"
+    },
+    {
+      "path": "validate.py",
+      "bytes": 2016,
+      "sha256": "6e3b7a825115ccd72e93863fd6658f54a62f6389113f7f82733af743d3ab6888"
+    },
+    {
+      "path": "verify_models.py",
+      "bytes": 1452,
+      "sha256": "0a2e3651b74840482be7120042765948f98a836755e133d348da79b16717c49e"
+    }
+  ]
 }
